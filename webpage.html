@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>My GeoLocation</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&v=3&callback=initialize" async defer></script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+	  <script>
+	var map;
+	var data;
+	const url = "https://api.thingspeak.com/channels/2089974/feeds.json?api_key=ZLY18M61HYEPVOG2&results=2";
+    
+	//for once 
+	async function initialize() {
+	const response = await fetch(url);
+	data = await response.json();
+    //const { Map } = await google.maps.importLibrary("maps");
+	var myLatlng = new google.maps.LatLng(data.feeds[0].field1, data.feeds[0].field2);
+     console.log(myLatlng);
+	var mapOptions = {
+		zoom: 18,
+		center: myLatlng
+    };
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: 'Vehicle'
+    });
+	}
+	async function update() {
+     //const t1 = new Date();
+     await initialize();
+     setTimeout(update, 10000);
+    }
+    update();
+	</script>
+  </body>
+</html>
