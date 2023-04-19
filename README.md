@@ -7,3 +7,5 @@ Software Used: Arduino IDE, ThingSpeak dashboard, google map api.
 
 How to run this project:
 1. Connect the SIM808 module and Arduino UNO through jumper wires.
+2. Insert the sim card inside the gprs module and apply the power supply to gprs module.
+3. 
